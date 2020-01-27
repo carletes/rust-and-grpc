@@ -1,4 +1,4 @@
-# Experiments in Rust gith gRPC
+# Experiments in Rust with gRPC
 
 Expose a [CRI endpoint](https://github.com/kubernetes/cri-api/blob/master/pkg/apis/runtime/v1alpha2/api.proto).
 
