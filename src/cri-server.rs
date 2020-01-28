@@ -199,7 +199,13 @@ impl RuntimeService for Cri {
         &self,
         request: Request<VersionRequest>,
     ) -> Result<Response<VersionResponse>, Status> {
-        unimplemented!()
+        let response = hello_cri::VersionResponse {
+            version: "1.2.3".to_string(),
+            runtime_name: "some-name".to_string(),
+            runtime_version: "4.5.6".to_string(),
+            runtime_api_version: "7.8.9".to_string(),
+        };
+        Ok(Response::new(response))
     }
 }
 

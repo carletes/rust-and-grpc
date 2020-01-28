@@ -6,6 +6,10 @@ edition = "2018"
 publish = false
 
 [[bin]]
+name = "cri-client"
+path = "src/cri-client.rs"
+
+[[bin]]
 name = "cri-server"
 path = "src/cri-server.rs"
 
