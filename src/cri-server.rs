@@ -1,12 +1,12 @@
 use tonic::{transport::Server, Request, Response, Status};
 
-pub mod hello_cri {
-    tonic::include_proto!("cri");
+pub mod cri {
+    tonic::include_proto!("runtime.v1alpha2");
 }
 
-use hello_cri::image_service_server::{ImageService, ImageServiceServer};
-use hello_cri::runtime_service_server::{RuntimeService, RuntimeServiceServer};
-use hello_cri::*;
+use cri::image_service_server::{ImageService, ImageServiceServer};
+use cri::runtime_service_server::{RuntimeService, RuntimeServiceServer};
+use cri::*;
 
 #[derive(Default)]
 pub struct Cri {}
@@ -200,7 +200,7 @@ impl RuntimeService for Cri {
         request: Request<VersionRequest>,
     ) -> Result<Response<VersionResponse>, Status> {
         println!("version(): Request: {:#?}", request);
-        let response = hello_cri::VersionResponse {
+        let response = cri::VersionResponse {
             version: "1.2.3".to_string(),
             runtime_name: "some-name".to_string(),
             runtime_version: "4.5.6".to_string(),

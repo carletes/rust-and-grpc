@@ -1,9 +1,9 @@
-pub mod hello_cri {
-    tonic::include_proto!("cri");
+pub mod cri {
+    tonic::include_proto!("runtime.v1alpha2");
 }
 
-use hello_cri::runtime_service_client::RuntimeServiceClient;
-use hello_cri::*;
+use cri::runtime_service_client::RuntimeServiceClient;
+use cri::*;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
