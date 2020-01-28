@@ -1,0 +1,18 @@
+[package]
+name = "hello_cri"
+version = "0.1.0"
+authors = ["Carlos Valiente <carlos@pepelabs.net>"]
+edition = "2018"
+publish = false
+
+[[bin]]
+name = "cri-server"
+path = "src/cri-server.rs"
+
+[dependencies]
+prost = "0.6.1"
+tokio = { version = "0.2.11", features = ["macros"] }
+tonic = "0.1.1"
+
+[build-dependencies]
+tonic-build = "0.1.1"
