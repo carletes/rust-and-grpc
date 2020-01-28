@@ -199,6 +199,7 @@ impl RuntimeService for Cri {
         &self,
         request: Request<VersionRequest>,
     ) -> Result<Response<VersionResponse>, Status> {
+        println!("version(): Request: {:#?}", request);
         let response = hello_cri::VersionResponse {
             version: "1.2.3".to_string(),
             runtime_name: "some-name".to_string(),
