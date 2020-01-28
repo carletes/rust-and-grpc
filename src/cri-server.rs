@@ -1,27 +1,53 @@
 use tonic::{transport::Server, Request, Response, Status};
 
-use hello_cri::runtime_service_server::{RuntimeService, RuntimeServiceServer};
-use hello_cri::{
-    AttachRequest, AttachResponse, ContainerStatsRequest, ContainerStatsResponse,
-    ContainerStatusRequest, ContainerStatusResponse, CreateContainerRequest,
-    CreateContainerResponse, ExecRequest, ExecResponse, ExecSyncRequest, ExecSyncResponse,
-    ListContainerStatsRequest, ListContainerStatsResponse, ListContainersRequest,
-    ListContainersResponse, ListPodSandboxRequest, ListPodSandboxResponse, PodSandboxStatusRequest,
-    PodSandboxStatusResponse, PortForwardRequest, PortForwardResponse, RemoveContainerRequest,
-    RemoveContainerResponse, RemovePodSandboxRequest, RemovePodSandboxResponse,
-    ReopenContainerLogRequest, ReopenContainerLogResponse, RunPodSandboxRequest,
-    RunPodSandboxResponse, StartContainerRequest, StartContainerResponse, StatusRequest,
-    StatusResponse, StopContainerRequest, StopContainerResponse, StopPodSandboxRequest,
-    StopPodSandboxResponse, UpdateContainerResourcesRequest, UpdateContainerResourcesResponse,
-    UpdateRuntimeConfigRequest, UpdateRuntimeConfigResponse, VersionRequest, VersionResponse,
-};
-
 pub mod hello_cri {
     tonic::include_proto!("cri");
 }
 
+use hello_cri::image_service_server::{ImageService, ImageServiceServer};
+use hello_cri::runtime_service_server::{RuntimeService, RuntimeServiceServer};
+use hello_cri::*;
+
 #[derive(Default)]
 pub struct Cri {}
+
+#[tonic::async_trait]
+impl ImageService for Cri {
+    async fn image_status(
+        &self,
+        request: Request<ImageStatusRequest>,
+    ) -> Result<Response<ImageStatusResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn image_fs_info(
+        &self,
+        request: Request<ImageFsInfoRequest>,
+    ) -> Result<Response<ImageFsInfoResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn list_images(
+        &self,
+        request: Request<ListImagesRequest>,
+    ) -> Result<Response<ListImagesResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn pull_image(
+        &self,
+        request: Request<PullImageRequest>,
+    ) -> Result<Response<PullImageResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn remove_image(
+        &self,
+        request: Request<RemoveImageRequest>,
+    ) -> Result<Response<RemoveImageResponse>, Status> {
+        unimplemented!()
+    }
+}
 
 #[tonic::async_trait]
 impl RuntimeService for Cri {
@@ -180,10 +206,12 @@ impl RuntimeService for Cri {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = "0.0.0.0:50051".parse().unwrap();
-    let cri = Cri::default();
+    let cri_image = Cri::default();
+    let cri_runtime = Cri::default();
 
     Server::builder()
-        .add_service(RuntimeServiceServer::new(cri))
+        .add_service(ImageServiceServer::new(cri_image))
+        .add_service(RuntimeServiceServer::new(cri_runtime))
         .serve(addr)
         .await?;
 
